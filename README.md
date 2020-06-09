@@ -1,18 +1,26 @@
 <h1 align="center">
 <br>
-  <img src="./Frontend/src/assets/logo.svg" alt="Ecoleta" width="120">
+  <img src="./Frontend/src/assets/logo.svg" alt="Ecoleta" width="120"> <img > 
 <br>
 
 </h1>
-
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT">
   </a>
+
 </p>
 
-![Ecoleta](assets/ecoleta.gif)
+## Frontend
+
+![Frontend](assets/ecoleta.gif)
+
+## Mobile
+
+![Mobile](assets/mobile.png)
+
+
 <hr />
 
 ## Feature
@@ -38,7 +46,7 @@
         Run the command  cd ..  for come back 
     </li>
     <li>
-        Open the folder Frontend width   cd Frontend
+        Open the folder Frontend with   cd Frontend
     </li>
     <li>
         Run the command yarn start or npm run start
