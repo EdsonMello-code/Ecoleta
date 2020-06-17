@@ -12,6 +12,11 @@
 
 </p>
 
+## Overview
+
+This is a project created during the week of the next level #NLW of Rocketseat, it consists of connecting collection points with people who want to dispose of their waste.
+
+
 ## Frontend
 
 ![Frontend](assets/ecoleta.gif)
