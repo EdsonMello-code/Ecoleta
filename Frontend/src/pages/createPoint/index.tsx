@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import axios from 'axios';
-import { LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent, latLng } from 'leaflet';
 import api from '../../services/api';
 
 import './styles.css';
@@ -34,26 +34,34 @@ const CreatePoint = () => {
   const [ items, setItems ] = useState<Item[]>([]);
   const [ ufs, setUfs ] = useState<string[]>([]);
   const [ cities, setCities ] = useState<string[]>([]);
-  const [ initialsPosition, SetSelecedPosition] = useState<[number, number]>([0, 0]);
+  const [ initialsPosition, setInicialPosition] = useState<[number, number]>([0, 0]);
   
   const [ selectUf, setSelectedUf ] = useState('0');
-  const [ selectedPosition, setInicialPosition ] = useState<[number, number]>([0, 0]);
-  const history = useHistory();
+  const [ selectedPosition, setSelecedPosition ] = useState<[number, number]>([0, 0]);
   const [ formData, SetFormData] = useState({
     name: '',
     email: '',
     whatsapp: '',
   });
-   
+  
+  
+
 // get api data for the component
   
   
  const [ selectedCity, setSelectedCity ] = useState('0');
  const [ selectedItems, setSelectedItems ] = useState<number[]>([]) 
+ 
+ const history = useHistory();
+
  useEffect(() => {
+
    navigator.geolocation.getCurrentPosition(position => {
     const { latitude, longitude } = position.coords;
+
     setInicialPosition([latitude, longitude])
+    console.log(latitude, longitude)
+    // console.log(initialsPosition +'ini')
    });
  }, []);
 
@@ -68,6 +76,7 @@ const CreatePoint = () => {
       .then(response => {
         const UfInitials = response.data.map((uf) => uf.sigla);
         console.log(UfInitials)
+
         setUfs(UfInitials)
       });
   }, []);
@@ -100,7 +109,9 @@ const CreatePoint = () => {
   }
 
   function handleMapClick(event: LeafletMouseEvent) {
-    SetSelecedPosition([
+    console.log(event.latlng.lat + 'lat');
+    console.log(event.latlng.lng + 'lan');
+    setSelecedPosition([
       event.latlng.lat,
       event.latlng.lng
     ])
@@ -139,10 +150,15 @@ const CreatePoint = () => {
       longitude,
       items
     };
+    console.log(initialsPosition + 'teste')
+      
     await api.post('points', data);
+
     alert('Ponto de coleta criado!');
+    
     history.push('/')
     console.log(data);
+   
   }
   return (
     <div id="page-create-point">
@@ -201,14 +217,14 @@ const CreatePoint = () => {
             <h2>Endereço</h2>
             <span>Selecione o endereço no mapa</span>
           </legend>
-
-          <Map center={[-9.124056, -37.736722]} zoom={11} onClick={handleMapClick}>
+          {console.log(initialsPosition)}
+          <Map center={initialsPosition} zoom={15} onClick={handleMapClick}>
             <TileLayer 
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-              <Marker position={[-9.124056, -37.736722]}/>
+              <Marker position={selectedPosition}/>
           </Map>
 
           <div className="field-group">

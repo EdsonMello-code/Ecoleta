@@ -17,7 +17,7 @@ interface Item {
 interface Point {
   id: number;
   name: string;
-  image: string;
+  image_url: string;
   latitude: number;
   longitude: number;
 
@@ -49,6 +49,7 @@ const Points = () => {
       const location = await Location.getCurrentPositionAsync();
 
       const { latitude, longitude } = location.coords;
+
       console.log(latitude, longitude)
       setInitialPosition([
         latitude,
@@ -61,7 +62,7 @@ const Points = () => {
 
   useEffect(() => {
     api.get('items')
-    .then(response => {
+      .then(response => {
       setItems(response.data)
     })
   }, []);
@@ -69,7 +70,7 @@ const Points = () => {
   useEffect(() => {
     api.get('points', {
       params: {
-        city: routeParams.uf,
+        city: routeParams.city,
         uf: routeParams.uf,
         items: selectedItems
       }
@@ -111,15 +112,15 @@ const Points = () => {
 
       <View style={styles.mapContainer}>
         { initialPosition[0] !== 0 && (
-          <MapView style={styles.map} loadingEnabled={initialPosition[0] === 0} initialRegion={{
+          <MapView style={styles.map} initialRegion={{
             latitude: initialPosition[0],
             longitude: initialPosition[1],
-            latitudeDelta: 0.014,
-            longitudeDelta: 0.014,
+            latitudeDelta: 0.010,
+            longitudeDelta: 0.010,
           }}>
-           {pointd.map((point) => (
+           {pointd.map(point => (
               <Marker
-              key={point.id}
+              key={String(point.id)}
               style={styles.mapMarker}
               onPress={() => handleNavigateToDetail(point.id)}
               coordinate={{
@@ -128,7 +129,7 @@ const Points = () => {
               }}
               >
               <View style={styles.mapMarkerContainer}>  
-                <Image style={styles.mapMarkerImage} source={{ uri: point.image}}/>
+                <Image style={styles.mapMarkerImage} source={{ uri: point.image_url}}/>
             <Text style={styles.mapMarkerTitle}>{point.name}</Text>
               </View>
               </Marker>
@@ -155,7 +156,7 @@ const Points = () => {
         activeOpacity={0.6}
         >
           <SvgUri width={42} height={42} uri={item.image_url} />
-          <Text style={styles.itemTitle}>Lâmpadas</Text>
+          <Text style={styles.itemTitle}>{item.title}</Text>
         </TouchableOpacity>
 
       ))}
