@@ -18,6 +18,7 @@ This is a project created during the week of the next level #NLW of Rocketseat, 
 
 
 ## Frontend
+<div align='center'>
 
 ![Frontend](assets/ecoleta.gif)
 
@@ -25,6 +26,7 @@ This is a project created during the week of the next level #NLW of Rocketseat, 
 
 ![Mobile](assets/mobile.png)
 
+</div>
 
 <hr />
 
